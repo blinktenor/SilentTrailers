@@ -3,7 +3,7 @@ import { Row, Col, Spin } from 'antd';
 import styled from 'styled-components';
 import { gapi } from 'gapi-script';
 import GoogleDriveImage from '../../assets/images/google-drive.png';
-import ListDocuments from '../ListDocuments';
+import { ListDocuments } from '../ListDocuments';
 import { style } from './styles';
 
 const NewDocumentWrapper = styled.div`
@@ -21,7 +21,7 @@ const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/drive/v3/r
 // included, separated by spaces.
 const SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly';
 
-const SelectSource = () => {
+export const SelectSource = () => {
   const [listDocumentsVisible, setListDocumentsVisibility] = useState(false);
   const [documents, setDocuments] = useState([]);
   const [isLoadingGoogleDriveApi, setIsLoadingGoogleDriveApi] = useState(false);
@@ -154,5 +154,3 @@ const SelectSource = () => {
     </NewDocumentWrapper>
   );
 };
-
-export default SelectSource;

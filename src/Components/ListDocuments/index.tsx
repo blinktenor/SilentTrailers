@@ -15,13 +15,13 @@ const columns = [
     title: 'Last Modified Date',
     dataIndex: 'modifiedTime',
     key: 'modifiedTime',
-    render: (text) => <span>{moment(text).format('Do MMM YYYY HH:mm A')}</span>,
+    render: (text: string) => <span>{moment(text).format('Do MMM YYYY HH:mm A')}</span>,
   },
   {
     title: 'Action',
     key: 'status',
     dataIndex: 'status',
-    render: (tag) => (
+    render: () => (
       <span>
         <Tooltip title="View Document">
           <Button type="primary" ghost>
@@ -32,8 +32,19 @@ const columns = [
     ),
   },
 ];
-const ListDocuments = ({ visible, onClose, documents = [], onSearch, signedInUser, onSignOut, isLoading }) => {
-  const search = (value) => {
+
+interface ListDocumentsProps {
+  visible: boolean;
+  onClose: () => void;
+  documents: Array<object>;
+  onSearch: (q: string) => void;
+  signedInUser: {Ad: string, zu: string};
+  isLoading: boolean;
+  onSignOut: () => void;
+}
+
+export const ListDocuments: React.FC<ListDocumentsProps> = ({ visible, onClose, documents = [], onSearch, signedInUser, onSignOut, isLoading }) => {
+  const search = (value: string) => {
     delayedQuery(`name contains '${value}'`);
   };
 
@@ -84,5 +95,3 @@ const ListDocuments = ({ visible, onClose, documents = [], onSearch, signedInUse
     </Drawer>
   );
 };
-
-export default ListDocuments;
