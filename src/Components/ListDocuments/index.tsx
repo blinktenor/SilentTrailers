@@ -1,42 +1,16 @@
 import React, { useCallback } from 'react';
 import moment from 'moment';
 import { debounce } from 'lodash';
+import { Folders } from '../Folders';
+import { Document, getDocumentTreeStructure } from '../shared/documentUtils';
 
 import { Col, Drawer, Row, Button, Input, Table, Tooltip } from 'antd';
 const { Search } = Input;
 
-const columns = [
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: 'Last Modified Date',
-    dataIndex: 'modifiedTime',
-    key: 'modifiedTime',
-    render: (text: string) => <span>{moment(text).format('Do MMM YYYY HH:mm A')}</span>,
-  },
-  {
-    title: 'Action',
-    key: 'status',
-    dataIndex: 'status',
-    render: () => (
-      <span>
-        <Tooltip title="View Document">
-          <Button type="primary" ghost>
-            Select
-          </Button>
-        </Tooltip>
-      </span>
-    ),
-  },
-];
-
 interface ListDocumentsProps {
   visible: boolean;
   onClose: () => void;
-  documents: Array<object>;
+  documents: Array<Document>;
   onSearch: (q: string) => void;
   signedInUser: {Ad: string, zu: string};
   isLoading: boolean;
@@ -53,6 +27,18 @@ export const ListDocuments: React.FC<ListDocumentsProps> = ({ visible, onClose, 
     []
   );
 
+  //console.log(documents);
+  //Need to make my own component instead of the table (or pass that into the table)
+  //Parent looks to be the containing bit
+  //Ugh the folders have the same parents
+  //0AJKuWs-AESPrUk9PVA
+
+  if(documents.length === 0) {
+    return (<></>);
+  }
+
+  const documentTree = getDocumentTreeStructure(documents);
+
   return (
     <Drawer
       title="Select Google Drive Document"
@@ -60,17 +46,16 @@ export const ListDocuments: React.FC<ListDocumentsProps> = ({ visible, onClose, 
       closable
       onClose={onClose}
       visible={visible}
-      width={900}
+      width={1000}
     >
       <Row gutter={16}>
-        <Col span={24}>
+        <Col span={10}>
           <div style={{ marginBottom: 20 }}>
             <p>Signed In as: {`${signedInUser?.Ad} (${signedInUser?.zu})`}</p>
             <Button type="primary" onClick={onSignOut}>
               Sign Out
             </Button>
           </div>
-
           <div className="table-card-actions-container">
             <div className="table-search-container">
               <Search
@@ -83,15 +68,13 @@ export const ListDocuments: React.FC<ListDocumentsProps> = ({ visible, onClose, 
               />
             </div>
           </div>
-          <Table
-            className="table-striped-rows"
-            columns={columns}
-            dataSource={documents}
-            pagination={{ simple: true }}
-            loading={isLoading}
-          />
+          {documentTree.map((folder) => (
+            <Folders folder={folder} />
+          ))}
         </Col>
       </Row>
     </Drawer>
   );
 };
+
+

@@ -37,7 +37,7 @@ export const SelectSource = () => {
     gapi.client.drive.files
       .list({
         pageSize: 10,
-        fields: 'nextPageToken, files(id, name, mimeType, modifiedTime)',
+        fields: 'nextPageToken, files(*)',
         q: searchTerm,
       })
       .then(function (response) {
@@ -85,9 +85,6 @@ export const SelectSource = () => {
    *  listeners.
    */
   const initClient = () => {
-    console.log('init');
-    console.log(CLIENT_ID);
-    console.log(API_KEY);
     setIsLoadingGoogleDriveApi(true);
     gapi.client
       .init({
