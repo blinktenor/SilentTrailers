@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Folder } from '../shared/documentUtils';
 import { Videos } from '../Video';
-import { Col, Row, Button, Input, Table, Tooltip } from 'antd';
+import { Col, Row, Button } from 'antd';
 
 interface FoldersProps {
   folder: Folder;
