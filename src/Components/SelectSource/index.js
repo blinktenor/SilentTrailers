@@ -21,7 +21,7 @@ const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/drive/v3/r
 // included, separated by spaces.
 const SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly';
 
-export const SelectSource = (props) => {
+export const SelectSource = () => {
   const [listDocumentsVisible, setListDocumentsVisibility] = useState(false);
   const [documents, setDocuments] = useState([]);
   const [isLoadingGoogleDriveApi, setIsLoadingGoogleDriveApi] = useState(false);
@@ -131,7 +131,6 @@ export const SelectSource = (props) => {
           signedInUser={signedInUser}
           onSignOut={handleSignOutClick}
           isLoading={isFetchingGoogleDriveFiles}
-          setVideoUrl={props.setVideoUrl}
         />
         <Col span={8}>
           <Spin spinning={isLoadingGoogleDriveApi} style={{ width: '100%' }}>
