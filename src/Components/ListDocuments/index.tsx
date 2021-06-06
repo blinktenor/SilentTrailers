@@ -17,7 +17,15 @@ interface ListDocumentsProps {
   onSignOut: () => void;
 }
 
-export const ListDocuments: React.FC<ListDocumentsProps> = ({ visible, onClose, documents = [], onSearch, signedInUser, onSignOut, isLoading }) => {
+export const ListDocuments: React.FC<ListDocumentsProps> = ({ 
+  visible, 
+  onClose, 
+  documents = [], 
+  onSearch, 
+  signedInUser, 
+  onSignOut, 
+  isLoading,
+}) => {
   const search = (value: string) => {
     delayedQuery(`name contains '${value}'`);
   };
@@ -69,7 +77,7 @@ export const ListDocuments: React.FC<ListDocumentsProps> = ({ visible, onClose, 
             </div>
           </div>
           {documentTree.map((folder) => (
-            <Folders folder={folder} />
+            <Folders folder={folder} key={folder.id} />
           ))}
         </Col>
       </Row>

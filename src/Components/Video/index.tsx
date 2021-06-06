@@ -7,11 +7,23 @@ interface VideosProps {
 }
 
 export const Videos: React.FC<VideosProps> = ({ videos }) => {
+
+  const openVideoUrl = (video: Document) => {
+    window.open(video.webViewLink, "_blank");
+  }
+
   return (
     <>
     { videos.map((video) => (
-      <Row> 
+      <Row key={video.id}> 
         <Col> {video.name} </Col>
+        <Col> 
+          <Button
+            onClick={() => {openVideoUrl(video)}}
+          > 
+            Play Video 
+          </Button>
+        </Col>
       </Row>
     ))}
     </>
