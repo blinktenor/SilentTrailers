@@ -27,7 +27,6 @@ export const SelectSource = () => {
   const [isLoadingGoogleDriveApi, setIsLoadingGoogleDriveApi] = useState(false);
   const [isFetchingGoogleDriveFiles, setIsFetchingGoogleDriveFiles] = useState(false);
   const [signedInUser, setSignedInUser] = useState();
-  const handleChange = (file) => {};
 
   /**
    * Print files.
@@ -112,10 +111,6 @@ export const SelectSource = () => {
     gapi.load('client:auth2', initClient);
   };
 
-  const showDocuments = () => {
-    setListDocumentsVisibility(true);
-  };
-
   const onClose = () => {
     setListDocumentsVisibility(false);
   };
@@ -137,7 +132,7 @@ export const SelectSource = () => {
             <div onClick={() => handleClientLoad()} className="source-container">
               <div className="icon-container">
                 <div className="icon icon-success">
-                  <img height="80" width="80" src={GoogleDriveImage} />
+                  <img height="80" width="80" src={GoogleDriveImage} alt="Link Google Drive" />
                 </div>
               </div>
               <div className="content-container">

@@ -1,10 +1,9 @@
 import React, { useCallback } from 'react';
-import moment from 'moment';
 import { debounce } from 'lodash';
 import { Folders } from '../Folders';
 import { Document, getDocumentTreeStructure } from '../shared/documentUtils';
 
-import { Col, Drawer, Row, Button, Input, Table, Tooltip } from 'antd';
+import { Col, Drawer, Row, Button, Input } from 'antd';
 const { Search } = Input;
 
 interface ListDocumentsProps {
