@@ -6,8 +6,8 @@ import { Scorecard } from './Scorecard';
 function App() {
   return (
     <div className="App">
-      <SelectSource />
       <Scorecard />
+      <SelectSource />
     </div>
   );
 }

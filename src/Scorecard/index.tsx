@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { PlayerControls } from './PlayerControls';
+import { Gamestate } from './Gamestate';
 
 export const Scorecard = () => {
   const [players, setPlayers] = useState<Array<string>>([]);
@@ -15,6 +16,7 @@ export const Scorecard = () => {
   return (
     <>
       <PlayerControls players={players} addPlayer={addPlayer} removePlayer={removePlayer} />
+      <Gamestate players={players} />
     </>
   );
 }
