@@ -34,12 +34,6 @@ export const ListDocuments: React.FC<ListDocumentsProps> = ({
     []
   );
 
-  //console.log(documents);
-  //Need to make my own component instead of the table (or pass that into the table)
-  //Parent looks to be the containing bit
-  //Ugh the folders have the same parents
-  //0AJKuWs-AESPrUk9PVA
-
   if(documents.length === 0) {
     return (<></>);
   }
