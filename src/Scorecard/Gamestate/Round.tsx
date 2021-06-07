@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 
 interface RoundProps {
   players: Array<string>;
@@ -17,11 +18,10 @@ export const Round: React.FC<RoundProps> = ({ players, roundNumber }) => {
   const [playerScore, setPlayerScore] = useState<number>(0);
 
   const updateRoundScore = (roundNumber: number, round: Map<string, Match>) => {
-    console.log('updating scores');
     let kieth = 0;
     let player = 0;
+    const points = Math.pow(2, roundNumber);
     round.forEach((value, key) => {
-      const points = (roundNumber + 1) * (roundNumber + 1);
       if (value.winner === 'Kieth') {
         kieth += points;
       } else {
@@ -39,32 +39,60 @@ export const Round: React.FC<RoundProps> = ({ players, roundNumber }) => {
 
   const displayRoundScore = (roundNumber: number, playerDisplay: number, kiethDisplay: number) => (
     <>
-      <span> Players: {playerDisplay} </span>
-      <span> Kieth: {kiethDisplay} </span>
+      <ScoreContainer> Players: {playerDisplay} </ScoreContainer>
+      <ScoreContainer> Kieth: {kiethDisplay} </ScoreContainer>
     </>
   );
 
   return (
-    <div key={`round-${roundNumber}`} >
-      Round: {roundNumber + 1}
+    <RoundContainer key={`round-${roundNumber}`} >
       {players.map((player) => (
-        <>
-          {player}: 
-          <input 
+        <RadioWrapper>
+          <NameContainer> {player}: </NameContainer>
+          <WinnerRadio 
             type="radio" 
             name={`${player}-${roundNumber}`} 
             onClick={() => updateScore(roundNumber, player, player)} 
           />
-          Kieth: 
-          <input 
+          <NameContainer> Kieth: </NameContainer>
+          <WinnerRadio 
             type="radio" 
             name={`${player}-${roundNumber}`} 
             onClick={() => updateScore(roundNumber, player, 'Kieth')} 
           />
-        </>
+        </RadioWrapper>
       ))}
-      Round Score:
-      {displayRoundScore(roundNumber, playerScore, kiethScore)}
-    </div>
+      <RoundScoreDisplay>
+        Round Score:
+        {displayRoundScore(roundNumber, playerScore, kiethScore)}
+      </RoundScoreDisplay>
+    </RoundContainer>
   );
 }
+
+const RadioWrapper = styled.span`
+  border: 1px solid light-grey;
+  margin-right: 20px
+`;
+
+
+
+const RoundScoreDisplay = styled.span`
+  margin-left: 20px;
+`;
+
+const WinnerRadio = styled.input`
+  margin-right: 5px;
+`;
+
+const NameContainer = styled.span`
+  margin-right: 5px;
+`;
+
+const ScoreContainer = styled.span`
+  margin-right: 20px;
+`;
+
+const RoundContainer = styled.div`
+  margin-top: 20px;
+`;

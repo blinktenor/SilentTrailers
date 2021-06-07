@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Row, Col, Spin } from 'antd';
+import { Button, Row, Col, Spin } from 'antd';
 import styled from 'styled-components';
 import { gapi } from 'gapi-script';
 import GoogleDriveImage from '../../assets/images/google-drive.png';
@@ -127,21 +127,28 @@ export const SelectSource = () => {
           onSignOut={handleSignOutClick}
           isLoading={isFetchingGoogleDriveFiles}
         />
-        <Col span={8}>
-          <Spin spinning={isLoadingGoogleDriveApi} style={{ width: '100%' }}>
-            <div onClick={() => handleClientLoad()} className="source-container">
-              <div className="icon-container">
-                <div className="icon icon-success">
-                  <img height="80" width="80" src={GoogleDriveImage} alt="Link Google Drive" />
+        {!signedInUser &&
+          <Col span={10}>
+            <Spin spinning={isLoadingGoogleDriveApi} style={{ width: '100%' }}>
+              <div onClick={() => handleClientLoad()} className="source-container">
+                <div className="icon-container">
+                  <div className="icon icon-success">
+                    <img height="80" width="80" src={GoogleDriveImage} alt="Link Google Drive" />
+                  </div>
+                </div>
+                <div className="content-container">
+                  <p className="title">Google Drive</p>
+                  <span className="content">Import documents straight from your google drive</span>
                 </div>
               </div>
-              <div className="content-container">
-                <p className="title">Google Drive</p>
-                <span className="content">Import documents straight from your google drive</span>
-              </div>
-            </div>
-          </Spin>
-        </Col>
+            </Spin>
+          </Col>
+        }
+        {signedInUser &&
+          <Button type="primary" onClick={() => setListDocumentsVisibility(true)}>
+            Pick Video
+          </Button>
+        }
       </Row>
     </NewDocumentWrapper>
   );

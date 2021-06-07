@@ -6,6 +6,7 @@ export const Scorecard = () => {
   const [players, setPlayers] = useState<Array<string>>([]);
 
   const addPlayer = (playerName: string) => {
+    if (!playerName || playerName === '') return;
     setPlayers(players.concat([playerName]));
   }
 
