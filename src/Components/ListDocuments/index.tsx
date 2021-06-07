@@ -2,7 +2,7 @@ import React from 'react';
 import { Folders } from '../Folders';
 import { Document, getDocumentTreeStructure } from '../shared/documentUtils';
 
-import { Col, Drawer, Row, Button } from 'antd';
+import { Drawer, Button } from 'antd';
 
 interface ListDocumentsProps {
   visible: boolean;

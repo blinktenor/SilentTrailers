@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { PlayerControls } from './PlayerControls';
 import { Gamestate } from './Gamestate';
 
-export const Scorecard = () => {
+export const Scorecard = ({...props}) => {
   const [players, setPlayers] = useState<Array<string>>(['Bob', 'Doug']);
 
   const addPlayer = (playerName: string) => {
@@ -17,7 +17,7 @@ export const Scorecard = () => {
   return (
     <>
       <PlayerControls players={players} addPlayer={addPlayer} removePlayer={removePlayer} />
-      <Gamestate players={players} />
+      <Gamestate players={players} {...props} />
     </>
   );
 }

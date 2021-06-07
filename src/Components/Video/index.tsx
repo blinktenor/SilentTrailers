@@ -1,6 +1,5 @@
 import React from 'react';
 import { Document } from '../shared/documentUtils';
-import { Col, Row, Button } from 'antd';
 import styled from 'styled-components';
 
 interface VideosProps {
@@ -8,23 +7,22 @@ interface VideosProps {
 }
 
 export const Videos: React.FC<VideosProps> = ({ videos }) => {
-
   const openVideoUrl = (video: Document) => {
     window.open(video.webViewLink, "_blank");
   }
 
   return (
     <>
-    { videos.map((video) => (
-      <VideoWrapper key={video.id}> 
-        <VideoButton
-            onClick={() => {openVideoUrl(video)}}
-          > 
-          Play Video 
-        </VideoButton>
-        <span> {video.name} </span>
-      </VideoWrapper>
-    ))}
+      { videos.map((video) => (
+        <VideoWrapper key={video.id}> 
+          <VideoButton
+              onClick={() => {openVideoUrl(video)}}
+            > 
+            Play Video 
+          </VideoButton>
+          <span> {video.name} </span>
+        </VideoWrapper>
+      ))}
     </>
   );
 }

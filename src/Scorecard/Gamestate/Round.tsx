@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Button } from 'antd';
 
 interface RoundProps {
   players: Array<string>;
   roundNumber: number;
+  setListDocumentsVisibility?: (visible: boolean) => void;
 }
 
 interface Match {
@@ -12,7 +14,7 @@ interface Match {
   winner: string;
 }
 
-export const Round: React.FC<RoundProps> = ({ players, roundNumber }) => {
+export const Round: React.FC<RoundProps> = ({ players, roundNumber, setListDocumentsVisibility }) => {
   const roundWinner = new Map<string, Match>();
   const [kiethScore, setKiethScore] = useState<number>(0);
   const [playerScore, setPlayerScore] = useState<number>(0);
@@ -61,6 +63,11 @@ export const Round: React.FC<RoundProps> = ({ players, roundNumber }) => {
             name={`${player}-${roundNumber}`} 
             onClick={() => updateScore(roundNumber, player, 'Kieth')} 
           />
+          {setListDocumentsVisibility &&
+            <Button type="primary" onClick={() => setListDocumentsVisibility(true)}>
+              Pick Video
+            </Button>
+          }
         </RadioWrapper>
       ))}
       <RoundScoreDisplay>

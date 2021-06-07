@@ -8,7 +8,7 @@ interface GamestateProps {
   players: Array<string>;
 }
 
-export const Gamestate: React.FC<GamestateProps> = ({ players }) => {
+export const Gamestate: React.FC<GamestateProps> = ({ players, ...props }) => {
 
   return (
     <>
@@ -16,7 +16,7 @@ export const Gamestate: React.FC<GamestateProps> = ({ players }) => {
         (value: undefined, index: number) => {
           return (
             <RoundContainer key={`round-${index}`}>
-              <Round players={players} roundNumber={index} />
+              <Round players={players} roundNumber={index} {...props}/>
             </RoundContainer>
           );
         })
