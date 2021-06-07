@@ -46,6 +46,7 @@ export const Round: React.FC<RoundProps> = ({ players, roundNumber }) => {
 
   return (
     <RoundContainer key={`round-${roundNumber}`} >
+      <RoundDisplay> Round: {roundNumber + 1} </RoundDisplay>
       {players.map((player) => (
         <RadioWrapper>
           <NameContainer> {player}: </NameContainer>
@@ -63,7 +64,7 @@ export const Round: React.FC<RoundProps> = ({ players, roundNumber }) => {
         </RadioWrapper>
       ))}
       <RoundScoreDisplay>
-        Round Score:
+        <div> Round Score: </div>
         {displayRoundScore(roundNumber, playerScore, kiethScore)}
       </RoundScoreDisplay>
     </RoundContainer>
@@ -75,10 +76,13 @@ const RadioWrapper = styled.span`
   margin-right: 20px
 `;
 
-
+const RoundDisplay = styled.span`
+  margin-top: 20px;
+  display: block;
+`;
 
 const RoundScoreDisplay = styled.span`
-  margin-left: 20px;
+  display: block;
 `;
 
 const WinnerRadio = styled.input`
@@ -94,5 +98,9 @@ const ScoreContainer = styled.span`
 `;
 
 const RoundContainer = styled.div`
+  border-radius: 25px;
   margin-top: 20px;
+  background-color: #fff;
+  width: 50%;
+  display: inline-block
 `;

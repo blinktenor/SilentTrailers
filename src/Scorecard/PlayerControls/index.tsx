@@ -27,20 +27,29 @@ export const PlayerControls: React.FC<PlayerControlProps> = ({ players, addPlaye
   );
 
   return (
-    <>
+    <PlayerSetup>
       <div>
-        <PlayerInput onBlur={event => addPlayer(event.target.value)} onKeyDown={(event) => keypressHandler(event)} />
+        New Player: <PlayerInput onBlur={event => addPlayer(event.target.value)} onKeyDown={(event) => keypressHandler(event)} />
       </div>
       {players.map((player) => renderPlayer(player))}
-    </>
+    </PlayerSetup>
   );
 }
+
+const PlayerSetup = styled.div`
+  padding-top: 20px;
+  background-color: #dfdfdf;
+`;
 
 const PlayerInput = styled.input`
   margin-bottom: 20px;
 `;
 
 const PlayerWrapper = styled.div`
+  margin-left: 10px;
+  padding: 20px;
+  border-radius: 25px;
+  background-color: #fff;
   width: 20%;
   display: inline;
 `;

@@ -3,7 +3,7 @@ import { PlayerControls } from './PlayerControls';
 import { Gamestate } from './Gamestate';
 
 export const Scorecard = () => {
-  const [players, setPlayers] = useState<Array<string>>([]);
+  const [players, setPlayers] = useState<Array<string>>(['Bob', 'Doug']);
 
   const addPlayer = (playerName: string) => {
     if (!playerName || playerName === '') return;

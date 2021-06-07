@@ -15,18 +15,16 @@ export const Gamestate: React.FC<GamestateProps> = ({ players }) => {
       {[...Array(GAME_ROUNDS)].map(
         (value: undefined, index: number) => {
           return (
-            <div key={`round-${index}`}>
-              <RoundDisplay> Round: {index + 1} </RoundDisplay>
+            <RoundContainer key={`round-${index}`}>
               <Round players={players} roundNumber={index} />
-            </div>
+            </RoundContainer>
           );
         })
       }
     </>
   );
 }
-
-const RoundDisplay = styled.span`
-  margin-top: 20px;
-  margin-right: 20px;
+const RoundContainer = styled.div`
+  padding-top: 10px;
+  background-color: #dfdfdf;
 `;
