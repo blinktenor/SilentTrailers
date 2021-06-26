@@ -4,11 +4,7 @@ import styled from 'styled-components';
 
 const GAME_ROUNDS = 3;
 
-interface GamestateProps {
-  players: Array<string>;
-}
-
-export const Gamestate: React.FC<GamestateProps> = ({ players, ...props }) => {
+export const Gamestate = ({ ...props }) => {
 
   return (
     <>
@@ -16,7 +12,7 @@ export const Gamestate: React.FC<GamestateProps> = ({ players, ...props }) => {
         (value: undefined, index: number) => {
           return (
             <RoundContainer key={`round-${index}`}>
-              <Round players={players} roundNumber={index} {...props}/>
+              <Round roundNumber={index} {...props}/>
             </RoundContainer>
           );
         })
@@ -26,5 +22,5 @@ export const Gamestate: React.FC<GamestateProps> = ({ players, ...props }) => {
 }
 const RoundContainer = styled.div`
   padding-top: 10px;
-  background-color: #dfdfdf;
+  background-color: #000000;
 `;

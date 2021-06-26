@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Button } from 'antd';
+import { RootState } from '../../store/store';
+import { useSelector } from 'react-redux';
 
 interface RoundProps {
-  players: Array<string>;
   roundNumber: number;
   setListDocumentsVisibility?: (visible: boolean) => void;
 }
@@ -14,10 +15,11 @@ interface Match {
   winner: string;
 }
 
-export const Round: React.FC<RoundProps> = ({ players, roundNumber, setListDocumentsVisibility }) => {
+export const Round: React.FC<RoundProps> = ({ roundNumber, setListDocumentsVisibility }) => {
   const roundWinner = new Map<string, Match>();
   const [kiethScore, setKiethScore] = useState<number>(0);
   const [playerScore, setPlayerScore] = useState<number>(0);
+  const players = useSelector((state: RootState)=> state.players.value);
 
   const updateRoundScore = (roundNumber: number, round: Map<string, Match>) => {
     let kieth = 0;
@@ -50,7 +52,7 @@ export const Round: React.FC<RoundProps> = ({ players, roundNumber, setListDocum
     <RoundContainer key={`round-${roundNumber}`} >
       <RoundDisplay> Round: {roundNumber + 1} </RoundDisplay>
       {players.map((player) => (
-        <RadioWrapper>
+        <RadioWrapper key={player}>
           <NameContainer> {player}: </NameContainer>
           <WinnerRadio 
             type="radio" 
@@ -105,9 +107,11 @@ const ScoreContainer = styled.span`
 `;
 
 const RoundContainer = styled.div`
+  font-style: bold;
   border-radius: 25px;
   margin-top: 20px;
-  background-color: #fff;
+  background-color: #A9A9A9;
   width: 50%;
-  display: inline-block
+  display: inline-block;
+  color: #7FFF00;
 `;
