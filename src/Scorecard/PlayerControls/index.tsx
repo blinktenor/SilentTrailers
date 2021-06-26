@@ -1,20 +1,19 @@
 import React, { KeyboardEvent } from 'react';
 import { Button } from 'antd';
 import styled from 'styled-components';
+import { addPlayer, removePlayer } from '../../store/playersSlice';
+import { RootState } from '../../store/store';
+import { useSelector, useDispatch } from 'react-redux';
 
-interface PlayerControlProps {
-  addPlayer: (playerName: string) => void;
-  players: Array<string>;
-  removePlayer: (playerName: string) => void;
-}
-
-export const PlayerControls: React.FC<PlayerControlProps> = ({ players, addPlayer, removePlayer }) => {
+export const PlayerControls = () => {
+  const players = useSelector((state: RootState)=> state.players.value);
+  const dispatch = useDispatch();
 
   const keypressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       const target = event.target as HTMLInputElement;
       const playerName = target.value;
-      addPlayer(playerName);
+      dispatch(addPlayer(playerName));
       target.value = "";
     }
   };
@@ -22,7 +21,7 @@ export const PlayerControls: React.FC<PlayerControlProps> = ({ players, addPlaye
   const renderPlayer = (player: string) => (
     <PlayerWrapper key={player}>
       <PlayerName> {player} </PlayerName>
-      <Button onClick={() => {removePlayer(player)}}> X </Button>
+      <Button onClick={() => {dispatch(removePlayer(player))}}> X </Button>
     </PlayerWrapper>
   );
 
@@ -38,18 +37,20 @@ export const PlayerControls: React.FC<PlayerControlProps> = ({ players, addPlaye
 
 const PlayerSetup = styled.div`
   padding-top: 20px;
-  background-color: #dfdfdf;
+  background-color: #000000;
+  color: #7FFF00;
 `;
 
 const PlayerInput = styled.input`
   margin-bottom: 20px;
+  background-color: #A9A9A9;
 `;
 
 const PlayerWrapper = styled.div`
   margin-left: 10px;
   padding: 20px;
   border-radius: 25px;
-  background-color: #fff;
+  background-color: #A9A9A9;
   width: 20%;
   display: inline;
 `;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Row, Col, Spin } from 'antd';
+import { Row, Col, Spin } from 'antd';
 import styled from 'styled-components';
 import { gapi } from 'gapi-script';
 import GoogleDriveImage from '../../assets/images/google-drive.png';
@@ -21,12 +21,10 @@ const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/drive/v3/r
 // included, separated by spaces.
 const SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly';
 
-export const SelectSource = () => {
-  const [listDocumentsVisible, setListDocumentsVisibility] = useState(false);
-  const [documents, setDocuments] = useState([]);
+export const SelectSource = (props) => {
+  const { listDocumentsVisible, setListDocumentsVisibility, signedInUser, setSignedInUser, documents, setDocuments } = props;
   const [isLoadingGoogleDriveApi, setIsLoadingGoogleDriveApi] = useState(false);
   const [isFetchingGoogleDriveFiles, setIsFetchingGoogleDriveFiles] = useState(false);
-  const [signedInUser, setSignedInUser] = useState();
 
   /**
    * Print files.
@@ -143,11 +141,6 @@ export const SelectSource = () => {
               </div>
             </Spin>
           </Col>
-        }
-        {signedInUser &&
-          <Button type="primary" onClick={() => setListDocumentsVisibility(true)}>
-            Pick Video
-          </Button>
         }
       </Row>
     </NewDocumentWrapper>
