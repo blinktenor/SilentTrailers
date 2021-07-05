@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Button } from 'antd';
 import { RootState } from '../../store/store';
 import { useSelector } from 'react-redux';
+import { Player } from './Player';
 
 interface RoundProps {
   roundNumber: number;
-  setListDocumentsVisibility?: (visible: boolean) => void;
 }
 
 interface Match {
   round: number;
   matchup: string;
   winner: string;
+  movie: string;
 }
 
-export const Round: React.FC<RoundProps> = ({ roundNumber, setListDocumentsVisibility }) => {
-  const roundWinner = new Map<string, Match>();
+export const Round: React.FC<RoundProps> = ({ roundNumber }) => {
+  const [roundWinner, setRoundWinner] = useState<Map<string, Match>>(new Map<string, Match>());
   const [kiethScore, setKiethScore] = useState<number>(0);
   const [playerScore, setPlayerScore] = useState<number>(0);
   const players = useSelector((state: RootState)=> state.players.value);
@@ -37,8 +37,17 @@ export const Round: React.FC<RoundProps> = ({ roundNumber, setListDocumentsVisib
   }
 
   const updateScore = (roundNumber: number, player: string, winner: string) => {
-    roundWinner.set(player, {round: roundNumber, matchup: player, winner: winner});
+    const match = roundWinner.get(player);
+    const movie = match?.movie || '';
+    roundWinner.set(player, {round: roundNumber, matchup: player, winner: winner, movie: movie});
     updateRoundScore(roundNumber, roundWinner);
+  }
+
+  const setMovieForMatch = (player: string, movie: string) => {
+    const match = roundWinner.get(player) || {round: roundNumber, matchup: player, winner: '', movie: movie};
+    match.movie = movie;
+    roundWinner.set(player, match);
+    setRoundWinner(roundWinner);
   }
 
   const displayRoundScore = (roundNumber: number, playerDisplay: number, kiethDisplay: number) => (
@@ -52,25 +61,14 @@ export const Round: React.FC<RoundProps> = ({ roundNumber, setListDocumentsVisib
     <RoundContainer key={`round-${roundNumber}`} >
       <RoundDisplay> Round: {roundNumber + 1} </RoundDisplay>
       {players.map((player) => (
-        <RadioWrapper key={player}>
-          <NameContainer> {player}: </NameContainer>
-          <WinnerRadio 
-            type="radio" 
-            name={`${player}-${roundNumber}`} 
-            onClick={() => updateScore(roundNumber, player, player)} 
-          />
-          <NameContainer> Kieth: </NameContainer>
-          <WinnerRadio 
-            type="radio" 
-            name={`${player}-${roundNumber}`} 
-            onClick={() => updateScore(roundNumber, player, 'Kieth')} 
-          />
-          {setListDocumentsVisibility &&
-            <Button type="primary" onClick={() => setListDocumentsVisibility(true)}>
-              Pick Video
-            </Button>
-          }
-        </RadioWrapper>
+        <Player 
+          key={player}
+          roundNumber={roundNumber}
+          player={player}
+          movieName={roundWinner?.get(player)?.movie}
+          updateScore={updateScore}
+          setMovieForMatch={setMovieForMatch}
+        />
       ))}
       <RoundScoreDisplay>
         <div> Round Score: </div>
@@ -80,11 +78,6 @@ export const Round: React.FC<RoundProps> = ({ roundNumber, setListDocumentsVisib
   );
 }
 
-const RadioWrapper = styled.span`
-  border: 1px solid light-grey;
-  margin-right: 20px
-`;
-
 const RoundDisplay = styled.span`
   margin-top: 20px;
   display: block;
@@ -92,14 +85,6 @@ const RoundDisplay = styled.span`
 
 const RoundScoreDisplay = styled.span`
   display: block;
-`;
-
-const WinnerRadio = styled.input`
-  margin-right: 5px;
-`;
-
-const NameContainer = styled.span`
-  margin-right: 5px;
 `;
 
 const ScoreContainer = styled.span`
@@ -113,5 +98,5 @@ const RoundContainer = styled.div`
   background-color: #A9A9A9;
   width: 50%;
   display: inline-block;
-  color: #7FFF00;
+  color: #00008B;
 `;

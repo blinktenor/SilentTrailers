@@ -6,7 +6,7 @@ import { RootState } from '../../store/store';
 import { useSelector, useDispatch } from 'react-redux';
 
 export const PlayerControls = () => {
-  const players = useSelector((state: RootState)=> state.players.value);
+  const players = useSelector((state: RootState) => state.players.value);
   const dispatch = useDispatch();
 
   const keypressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -18,10 +18,14 @@ export const PlayerControls = () => {
     }
   };
 
+  const removePlayerWrapper = (player: string) => {
+    dispatch(removePlayer(player));
+  }
+
   const renderPlayer = (player: string) => (
     <PlayerWrapper key={player}>
       <PlayerName> {player} </PlayerName>
-      <Button onClick={() => {dispatch(removePlayer(player))}}> X </Button>
+      <Button onClick={() => removePlayerWrapper(player)}> X </Button>
     </PlayerWrapper>
   );
 
@@ -38,7 +42,7 @@ export const PlayerControls = () => {
 const PlayerSetup = styled.div`
   padding-top: 20px;
   background-color: #000000;
-  color: #7FFF00;
+  color: #FFFFFF;
 `;
 
 const PlayerInput = styled.input`
@@ -53,6 +57,7 @@ const PlayerWrapper = styled.div`
   background-color: #A9A9A9;
   width: 20%;
   display: inline;
+  color: #00008B;
 `;
 
 const PlayerName = styled.span`
