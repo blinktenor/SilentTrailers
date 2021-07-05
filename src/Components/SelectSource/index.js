@@ -5,6 +5,8 @@ import { gapi } from 'gapi-script';
 import GoogleDriveImage from '../../assets/images/google-drive.png';
 import { ListDocuments } from '../ListDocuments';
 import { style } from './styles';
+import { toggleTray } from '../../store/documentSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const NewDocumentWrapper = styled.div`
   ${style}
@@ -22,9 +24,11 @@ const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/drive/v3/r
 const SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly';
 
 export const SelectSource = (props) => {
-  const { listDocumentsVisible, setListDocumentsVisibility, signedInUser, setSignedInUser, documents, setDocuments } = props;
+  const { signedInUser, setSignedInUser, documents, setDocuments } = props;
   const [isLoadingGoogleDriveApi, setIsLoadingGoogleDriveApi] = useState(false);
   const [isFetchingGoogleDriveFiles, setIsFetchingGoogleDriveFiles] = useState(false);
+  const trayOpen = useSelector((state) => state.document.containerOpen);
+  const dispatch = useDispatch();
 
   /**
    * Print files.
@@ -39,7 +43,6 @@ export const SelectSource = (props) => {
       })
       .then(function (response) {
         setIsFetchingGoogleDriveFiles(false);
-        setListDocumentsVisibility(true);
         const res = JSON.parse(response.body);
         setDocuments(res.files);
       });
@@ -73,7 +76,7 @@ export const SelectSource = (props) => {
    *  Sign out the user upon button click.
    */
   const handleSignOutClick = (event) => {
-    setListDocumentsVisibility(false);
+    dispatch(toggleTray());
     gapi.auth2.getAuthInstance().signOut();
   };
 
@@ -110,14 +113,14 @@ export const SelectSource = (props) => {
   };
 
   const onClose = () => {
-    setListDocumentsVisibility(false);
+    dispatch(toggleTray());
   };
 
   return (
     <NewDocumentWrapper>
       <Row gutter={16} className="custom-row">
         <ListDocuments
-          visible={listDocumentsVisible}
+          visible={trayOpen}
           onClose={onClose}
           documents={documents}
           onSearch={listFiles}

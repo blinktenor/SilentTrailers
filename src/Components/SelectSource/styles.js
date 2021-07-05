@@ -7,10 +7,10 @@ const style = () => css`
     height: 100vh;
     align-items: center;
     justify-content: center;
-    background-color: #dfdfdf;
+    background-color: #000000;
   }
   .source-container {
-    background-color: #fff;
+    background-color: #A9A9A9;
     display: flex;
     flex: 1,
     padding: 20px;

@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import playersReducer from './playersSlice';
+import documentReducer from './documentSlice';
 
 const rootStore = configureStore({
   reducer: {
-    players: playersReducer
+    players: playersReducer,
+    document: documentReducer,
   }
 })
 
